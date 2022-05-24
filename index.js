@@ -46,7 +46,6 @@ const verifyJWT = (req, res, next) => {
             const token = jwt.sign({ email: data.email }, process.env.ACCESS_TOKEN);
             const query = { email: data.email }
             const user = await userCollection.findOne(query)
-            console.log(user)
 
             if (!user) {
                 const options = { upsert: true };
@@ -78,6 +77,14 @@ const verifyJWT = (req, res, next) => {
             const data = req.body
             const result = await productCollection.insertOne(data);
             res.send(result)
+        })
+
+        // Get all products api endpoint
+        app.get('/product', async (req, res) => {
+            const query = {}
+            const result = await productCollection.find(query).toArray()
+            res.send(result)
+
         })
 
 
