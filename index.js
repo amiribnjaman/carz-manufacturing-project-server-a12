@@ -44,20 +44,32 @@ const verifyJWT = (req, res, next) => {
             const data = req.body;
             const token = jwt.sign({ email: data.email }, process.env.ACCESS_TOKEN);
             const query = { email: data.email }
-            const options = { upsert: true };
-            const updateDoc = {
-                $set: data
+            const user = await userCollection.findOne(query)
+            console.log(user)
+
+            if (!user) {
+                const options = { upsert: true };
+                const updateDoc = {
+                    $set: data
+                }
+                const result = await userCollection.updateOne(query, updateDoc, options)
+                return res.send({ result, token })
             }
-            const result = await userCollection.updateOne(query, updateDoc, options)
-            res.send({ result, token })
+            return res.send({ token })
+
         })
 
+        // Get user api endpoint
         app.get('/user/:email', verifyJWT, async (req, res) => {
             const userEmail = req.params.email
             const { email } = req.decoded
-            if (email == email) {
-
-            } 
+            if (email === userEmail) {
+                const query = { email: email };
+                const result = await userCollection.findOne(query)
+                res.send(result)
+            } else {
+                return res.status(403).send({ msg: 'Access denied' })
+            }
         })
 
 
