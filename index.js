@@ -38,6 +38,7 @@ const verifyJWT = (req, res, next) => {
     try {
         await client.connect();
         const userCollection = client.db("carz_manufacturing_a12").collection("users");
+        const productCollection = client.db("carz_manufacturing_a12").collection("products");
 
         // Update or insert a user's api endpoint
         app.put('/user', async (req, res) => {
@@ -70,6 +71,13 @@ const verifyJWT = (req, res, next) => {
             } else {
                 return res.status(403).send({ msg: 'Access denied' })
             }
+        })
+
+        // Post or add a product api endpoint
+        app.post('/product', async (req, res) => {
+            const data = req.body
+            const result = await productCollection.insertOne(data);
+            res.send(result)
         })
 
 
