@@ -39,6 +39,7 @@ const verifyJWT = (req, res, next) => {
         await client.connect();
         const userCollection = client.db("carz_manufacturing_a12").collection("users");
         const productCollection = client.db("carz_manufacturing_a12").collection("products");
+        const orderCollection = client.db("carz_manufacturing_a12").collection("orders");
 
         // Update or insert a user's api endpoint
         app.put('/user', async (req, res) => {
@@ -107,6 +108,13 @@ const verifyJWT = (req, res, next) => {
             const id = req.params.id
             const query = { _id: ObjectId(id) }
             const result = await productCollection.findOne(query)
+            res.send(result)
+        })
+
+        // Inser a order api endpoint
+        app.post('/order', async (req, res) => {
+            const data = req.body
+            const result = await orderCollection.insertOne(data)
             res.send(result)
         })
 
