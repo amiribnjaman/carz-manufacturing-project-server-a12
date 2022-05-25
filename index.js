@@ -40,6 +40,7 @@ const verifyJWT = (req, res, next) => {
         const userCollection = client.db("carz_manufacturing_a12").collection("users");
         const productCollection = client.db("carz_manufacturing_a12").collection("products");
         const orderCollection = client.db("carz_manufacturing_a12").collection("orders");
+        const reviewCollection = client.db("carz_manufacturing_a12").collection("reviews");
 
         // Update or insert a user's api endpoint
         app.put('/user', async (req, res) => {
@@ -96,18 +97,18 @@ const verifyJWT = (req, res, next) => {
             res.send(result)
         })
 
-        // Get latest 6 products api endpoint
-        app.get('/product/latest', async (req, res) => {
-            const query = {}
-            const result = await productCollection.find(query).sort({ _id: 1 }).limit(6).toArray();
-            res.send(result)
-        })
-
         // Getting or find a specific product
         app.get('/product/:id', async (req, res) => {
             const id = req.params.id
             const query = { _id: ObjectId(id) }
             const result = await productCollection.findOne(query)
+            res.send(result)
+        })
+
+        // Get latest 6 products api endpoint
+        app.get('/product/latest', async (req, res) => {
+            const query = {}
+            const result = await productCollection.find(query).sort({ _id: 1 }).limit(6).toArray();
             res.send(result)
         })
 
@@ -118,13 +119,27 @@ const verifyJWT = (req, res, next) => {
             res.send(result)
         })
 
-        // Get all order for admin api end point
+        // Get all orders for admin api end point
         app.get('/order', async (req, res) => {
             const query = {}
             const result = await orderCollection.find(query).toArray()
             res.send(result)
         })
 
+        // Get a specific user orders api end point
+        app.get('/order/:email', async (req, res) => {
+            const email = req.params.email
+            const filter = ({ email: email })
+            const result = await orderCollection.find(filter).toArray()
+            res.send(result)
+        })
+
+        // Inser review api endpoint
+        app.post('/review', async (req, res) => {
+            const data = req.body
+            const result = await reviewCollection.insertOne(data)
+            res.send(result)
+        })
 
     }
     finally {
