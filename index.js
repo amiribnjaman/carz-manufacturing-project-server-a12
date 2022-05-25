@@ -87,9 +87,16 @@ const verifyJWT = (req, res, next) => {
         })
 
         // Get all user api endpoint
-        app.get('user', async (req, res) => {
+        app.get('/user', async (req, res) => {
             const query = {}
             const result = await userCollection.find(query).toArray()
+            res.send(result)
+        })
+
+        // Get latest 6 products api endpoint
+        app.get('/product/latest', async (req, res) => {
+            const query = {}
+            const result = await productCollection.find(query).sort({ _id: 1 }).limit(6).toArray();
             res.send(result)
         })
 
