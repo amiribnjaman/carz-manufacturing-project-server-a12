@@ -118,6 +118,13 @@ const verifyJWT = (req, res, next) => {
             res.send(result)
         })
 
+        // Get all order for admin api end point
+        app.get('/order', async (req, res) => {
+            const query = {}
+            const result = await orderCollection.find(query).toArray()
+            res.send(result)
+        })
+
 
     }
     finally {
