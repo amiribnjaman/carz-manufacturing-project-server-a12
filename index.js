@@ -44,6 +44,18 @@ const verifyJWT = (req, res, next) => {
         const reviewCollection = client.db("carz_manufacturing_a12").collection("reviews");
 
 
+        // Verification of admin
+        const adminVerification = async (req, res, next) => {
+            const requesterEmail = req.decoded.email
+            const filter = ({ email: requesterEmail })
+            const requesterVerify = await userCollection.findOne(filter)
+            if (requesterVerify.role == 'admin') {
+                next()
+            } else {
+                res.status(403).send({ msg: 'Forbidden' })
+            }
+        }
+
         // Stripe integretion api
         app.post('/create-payment-intent', verifyJWT, async (req, res) => {
             const service = req.body;
@@ -112,10 +124,10 @@ const verifyJWT = (req, res, next) => {
         })
 
         // Make a admin
-        app.put('/makeAdmin/:email', async (req, res) => {
+        app.put('/makeAdmin/:email', verifyJWT, adminVerification, async (req, res) => {
             const id = req.body.id
-            const requestedEmail = req.params.email
-            const query = ({ email: requestedEmail })
+            const email = req.params.email
+            const query = ({ email: email })
             const role = req.body.role
             const filter = ({ _id: ObjectId(id) })
             const isAdmin = await userCollection.findOne(query)
