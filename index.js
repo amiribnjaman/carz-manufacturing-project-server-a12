@@ -4,6 +4,7 @@ const cors = require('cors')
 const port = process.env.PORT || 5000
 require('dotenv').config()
 const jwt = require('jsonwebtoken');
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
 
 // Middlewares
 app.use(cors())
@@ -42,6 +43,22 @@ const verifyJWT = (req, res, next) => {
         const orderCollection = client.db("carz_manufacturing_a12").collection("orders");
         const reviewCollection = client.db("carz_manufacturing_a12").collection("reviews");
 
+
+        // Stripe integretion api
+        app.post('/create-payment-intent', verifyJWT, async (req, res) => {
+            const service = req.body;
+            const price = service?.price;
+            const amount = parseInt(price) * 100;
+            const paymentIntent = await stripe.paymentIntents.create({
+                amount: amount,
+                currency: 'usd',
+                payment_method_types: ['card']
+            });
+            res.send({
+                clientSecret: paymentIntent.client_secret
+            })
+        });
+
         // Update or insert a user's api endpoint
         app.put('/user', async (req, res) => {
             const data = req.body;
@@ -74,13 +91,46 @@ const verifyJWT = (req, res, next) => {
             }
         })
 
-
-
         // Get all user api endpoint
         app.get('/user', async (req, res) => {
             const query = {}
             const result = await userCollection.find(query).toArray()
             res.send(result)
+        })
+
+
+        // Get all user api endpoint
+        app.patch('/updateUser/:email', async (req, res) => {
+            const email = req.params.email
+            const data = req.body
+            const filter = ({ email: email })
+            const updateDoc = {
+                $set: data
+            }
+            const result = await userCollection.updateOne(filter, updateDoc)
+            res.send(result)
+        })
+
+        // Make a admin
+        app.put('/makeAdmin/:email', async (req, res) => {
+            const id = req.body.id
+            const requestedEmail = req.params.email
+            const query = ({ email: requestedEmail })
+            const role = req.body.role
+            const filter = ({ _id: ObjectId(id) })
+            const isAdmin = await userCollection.findOne(query)
+            if (isAdmin.role == 'admin') {
+                const options = { upsert: true };
+                const updateDoc = {
+                    $set: {
+                        role: role
+                    }
+                }
+                const result = await userCollection.updateOne(filter, updateDoc, options)
+                return res.send({ result })
+            }
+
+
         })
 
         // Post or add a product api endpoint
@@ -106,13 +156,24 @@ const verifyJWT = (req, res, next) => {
         })
 
         // Get latest 6 products api endpoint
-        app.get('/product/latest', async (req, res) => {
+        app.get('/products/latest', async (req, res) => {
             const query = {}
-            const result = await productCollection.find(query).sort({ _id: 1 }).limit(6).toArray();
+            const cursor = await productCollection.find().limit(4).sort({ $natural: -1 })
+            const result = await cursor.toArray();
             res.send(result)
         })
 
-        // Inser a order api endpoint
+        // Getting or find a specific product
+        app.delete('/product/:id', async (req, res) => {
+            const id = req.params.id
+            const query = { _id: ObjectId(id) }
+            const result = await productCollection.deleteOne(query)
+            res.send(result)
+        })
+
+
+
+        // Insert a order api endpoint
         app.post('/order', async (req, res) => {
             const data = req.body
             const result = await orderCollection.insertOne(data)
@@ -126,6 +187,14 @@ const verifyJWT = (req, res, next) => {
             res.send(result)
         })
 
+        // Get a specific order 
+        app.get('/orders/:id', async (req, res) => {
+            const id = req.params.id
+            const filter = ({ _id: ObjectId(id) })
+            const result = await orderCollection.findOne(filter)
+            res.send(result)
+        })
+
         // Get a specific user orders api end point
         app.get('/order/:email', async (req, res) => {
             const email = req.params.email
@@ -134,10 +203,41 @@ const verifyJWT = (req, res, next) => {
             res.send(result)
         })
 
-        // Inser review api endpoint
+        // Get a specific user orders api end point
+        app.get('/order/:email', async (req, res) => {
+            const email = req.params.email
+            const filter = ({ email: email })
+            const result = await orderCollection.find(filter).toArray()
+            res.send(result)
+        })
+
+        // Payment status update api endpoint
+        app.patch('/order/:id', async (req, res) => {
+            const id = req.params.id
+            console.log(id)
+            const data = req.body
+            const filter = { _id: ObjectId(id) }
+            const updateDoc = {
+                $set: {
+                    payment_status: true,
+                    transactionId: data.transactionId
+                }
+            }
+            const result = await orderCollection.updateOne(filter, updateDoc)
+            res.send(result)
+        })
+
+        // Insert review api endpoint
         app.post('/review', async (req, res) => {
             const data = req.body
             const result = await reviewCollection.insertOne(data)
+            res.send(result)
+        })
+
+        // Get reviews api end point
+        app.get('/review', async (req, res) => {
+            const query = {}
+            const result = await reviewCollection.find(query).toArray()
             res.send(result)
         })
 
