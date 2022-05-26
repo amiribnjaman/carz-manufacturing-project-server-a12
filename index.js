@@ -184,7 +184,6 @@ const verifyJWT = (req, res, next) => {
         })
 
 
-
         // Insert a order api endpoint
         app.post('/order', async (req, res) => {
             const data = req.body
@@ -204,6 +203,14 @@ const verifyJWT = (req, res, next) => {
             const id = req.params.id
             const filter = ({ _id: ObjectId(id) })
             const result = await orderCollection.findOne(filter)
+            res.send(result)
+        })
+
+        // Delete a specific order 
+        app.delete('/order/:id', async (req, res) => {
+            const id = req.params.id
+            const filter = ({ _id: ObjectId(id) })
+            const result = await orderCollection.deleteOne(filter)
             res.send(result)
         })
 
