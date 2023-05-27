@@ -37,7 +37,7 @@ const verifyJWT = (req, res, next) => {
 // Run or initial function for mongodb
 (async () => {
     try {
-        await client.connect();
+        client.connect();
         const userCollection = client.db("carz_manufacturing_a12").collection("users");
         const productCollection = client.db("carz_manufacturing_a12").collection("products");
         const orderCollection = client.db("carz_manufacturing_a12").collection("orders");
