@@ -44,6 +44,10 @@ const verifyJWT = (req, res, next) => {
         const reviewCollection = client.db("carz_manufacturing_a12").collection("reviews");
 
 
+        app.get('/', (req, res) => {
+            res.send('Hello World!')
+        })
+
         // Verification of admin
         const adminVerification = async (req, res, next) => {
             const requesterEmail = req.decoded.email
@@ -268,9 +272,7 @@ const verifyJWT = (req, res, next) => {
 })().catch(console.dir);
 
 
-app.get('/', (req, res) => {
-    res.send('Hello World!')
-})
+
 
 app.listen(port, () => {
     console.log(`Server Running on port ${port}`)
