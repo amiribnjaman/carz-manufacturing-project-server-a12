@@ -1,6 +1,6 @@
 {
     "version": 2,
-    "name": "electro-inventory",
+    "name": "carz-manufacturing",
     "builds": [
         {
             "src": "index.js",
