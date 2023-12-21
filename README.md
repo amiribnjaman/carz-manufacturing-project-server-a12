@@ -1,60 +1,73 @@
-# the carZ (A car part manufacturing website)
+<p align="center">
+  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
+</p>
 
-Take a look here [the carZ](https://carz-manufacturing-site-a12.web.app).
+[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
+[circleci-url]: https://circleci.com/gh/nestjs/nest
 
-## Site features
+  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
+    <p align="center">
+<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
+<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
+<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
+<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
+<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
+<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
+<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
+<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
+  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
+    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
+  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
+</p>
+  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
+  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
- - This is a car part manufacturing website where user can purchase a bunch of product, delete and comment and on the other side a admin can add, delete parts and can manage admin and products.
- 
- - Home page:
-- First this site have a Navbar. Here some of menus.
-        
-- Banner section. Here a banner image and some simple text.
+## Description
 
-- Parts section. Here simply showing parts as offer that this site offering.
+[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
-- Experts section. Here showing company's experts employies. 
+## Installation
 
-- A simple Review Section. Here showing users review or fedback.
+```bash
+$ npm install
+```
 
-- The Business section. This section is about simple business summary. 
+## Running the app
 
-- Contact us section. here showing company addresses and contact info and a button for contact.
+```bash
+# development
+$ npm run start
 
-- and a simple footer. here a logo text and some social media icons.
+# watch mode
+$ npm run start:dev
 
-- purchase page
-- When a user will clickecd  purchase button then he will be rediredted and he can order a bunch of products.
+# production mode
+$ npm run start:prod
+```
 
- - my order page
-- In the page user can delete or navigate to payment page.
+## Test
 
- - payment page 
- - in the payment page user can payment used card
-  
-  and he can give a review or feedback and last he/she can edit their profile page
+```bash
+# unit tests
+$ npm run test
 
-- Admin
-- a admin can add a product, manage, delete and also can delete unneccesery order those dosen't payment etc.
+# e2e tests
+$ npm run test:e2e
 
-## Technologies
+# test coverage
+$ npm run test:cov
+```
 
-  - Here describing some of the technologies that are used for this project:
+## Support
 
-    - Front-end:
-    - React app
-    - React router
-    - Firebae (For user authentication)
-    - react firebase hooks
-    - react hook form
-    - react query
-    - tailwind (css framework)
-    - flowbite (tailwind library)
-    - daisy ui (tailwind library)
-    - React hot toast (for showing messages)
-    - React stripe (for payment) etc
+Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
 
-    - Back-end:
-    - nodejs (js runtime)
-    - express (nodejs library) etc.
-    - express (nodejs library) etc.
+## Stay in touch
+
+- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
+- Website - [https://nestjs.com](https://nestjs.com/)
+- Twitter - [@nestframework](https://twitter.com/nestframework)
+
+## License
+
+Nest is [MIT licensed](LICENSE).
