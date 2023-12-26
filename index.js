@@ -70,18 +70,19 @@ const verifyJWT = (req, res, next) => {
 
       // Stripe integretion api
       app.post("/create-payment-intent", async (req, res) => {
-        const service = req.body;
-        const price = service?.price;
-        const amount = parseInt(price) * 100;
-        const paymentIntent = await stripe.paymentIntents.create({
-          amount: amount,
-          currency: "usd",
-          payment_method_types: ["card"],
-        });
-        res.send({
-          clientSecret: paymentIntent.client_secret,
-        });
+      const service = req.body;
+      console.log(service);
+      const price = service?.price;
+      const amount = parseInt(price) * 100;
+      const paymentIntent = await stripe.paymentIntents.create({
+        amount: amount,
+        currency: "usd",
+        payment_method_types: ["card"],
       });
+      res.send({
+        clientSecret: paymentIntent.client_secret,
+      });
+    });
 
       // Update or insert a user's api endpoint
       app.put("/user", async (req, res) => {
