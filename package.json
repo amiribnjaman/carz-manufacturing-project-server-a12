@@ -1,8 +1,8 @@
 {
   "name": "carz-manufacturing-a12-server",
-  "version": "0.0.1",
-  "description": "",
-  "author": "",
+  "version": "2.0.0",
+  "description": "theCarZ is a car or automobile manufacturing and selling company which also manufacture car parts.",
+  "author": "Amir Hosen",
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
@@ -24,6 +24,7 @@
     "@nestjs/config": "^3.1.1",
     "@nestjs/core": "^10.0.0",
     "@nestjs/platform-express": "^10.0.0",
+    "@prisma/client": "^5.7.1",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.8.1"
   },
