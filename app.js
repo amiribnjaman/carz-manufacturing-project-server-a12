@@ -1,9 +1,12 @@
 const express = require("express");
 const app = express();
 const cors = require("cors");
+require('./config/db.config')
 
 // Application level Middlewares
-app.use(cors());
+app.use(cors({
+    origin: true
+}));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
