@@ -1,9 +1,11 @@
-const app = require('./app')
-const PORT = process.env.PORT || 4000
+const app = require("./app");
+const PORT = process.env.PORT || 4000;
 
-
-
-// Application listning
+/**
+ *
+ * Application Listing
+ *
+ **/
 app.listen(PORT, () => {
-  console.log(`Application running on PORT ${PORT}`)
-})
+  console.log(`Application running on PORT ${PORT}`);
+});
