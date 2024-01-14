@@ -51,9 +51,9 @@ app.use((req, res, next) => {
  * Server error handling routes
  * 
  **/
-app.use((errro, req, res, next) => {
+app.use((error, req, res, next) => {
   res.status(500).send({
-    message: "Internal problem",
+    message: "Internal problem occur",
   });
 });
 

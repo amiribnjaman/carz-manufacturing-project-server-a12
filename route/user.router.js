@@ -4,7 +4,7 @@ const router = express.Router()
 
 
 router.get('/', getAllUser)
-router.put('/', user)
+router.patch('/', user)
 
 
 module.exports = router

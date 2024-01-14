@@ -17,10 +17,29 @@ const getAllUser = async (req, res) => {
  *
  **/
 const user = async (req, res) => {
-  const data = req.body;
+  const {name,email, password, role, education, linkedIn, location, number } = req.body;
+  // console.log(
+  //   name,
+  //   email,
+  //   password,
+  //   role,
+  //   education,
+  //   linkedIn,
+  //   location,
+  //   number
+  // );
+  const data = {
+    name,
+    email,
+    password,
+    role,
+    education,
+    linkedIn,
+    location,
+    number,
+  };
   const token = jwt.sign({ email: data.email }, process.env.ACCESS_TOKEN);
-  const query = { email: data.email };
-  const user = await User.findOne(query);
+  const user = await User.findOne({email});
 
   if (user) {
     const result = await User.updateOne(
@@ -30,10 +49,11 @@ const user = async (req, res) => {
       { $set: data }
     );
 
-    return res.send({ msg: "User Updated",result, token });
+    return res.send({ msg: "User Updated", result, token });
   } else {
     const user = new User(data);
     await user.save()
+    console.log(user, token)
     return res.send({ msg: "User created", token });
   }
 };
