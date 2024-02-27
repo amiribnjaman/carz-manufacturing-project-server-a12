@@ -21,7 +21,22 @@ app.use(express.json());
  * Application level routes
  * 
  **/
+/**
+ * User Router
+ **/
 app.use('/api/v1/user', userRouter)
+/**
+ * User Router
+ **/
+app.use('/api/v1/product', userRouter)
+/**
+ * Review Router
+ **/
+app.use('/api/v1/review', userRouter)
+/**
+ * Order Router
+ **/
+app.use('/api/v1/order', userRouter)
 
 
 /**

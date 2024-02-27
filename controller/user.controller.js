@@ -17,17 +17,8 @@ const getAllUser = async (req, res) => {
  *
  **/
 const user = async (req, res) => {
-  const {name,email, password, role, education, linkedIn, location, number } = req.body;
-  // console.log(
-  //   name,
-  //   email,
-  //   password,
-  //   role,
-  //   education,
-  //   linkedIn,
-  //   location,
-  //   number
-  // );
+  const { name, email, password, role, education, linkedIn, location, number } = req.body;
+  
   const data = {
     name,
     email,
@@ -57,5 +48,7 @@ const user = async (req, res) => {
     return res.send({ msg: "User created", token });
   }
 };
+
+
 
 module.exports = { getAllUser, user };
